@@ -1,10 +1,15 @@
 """
-    Date:   2021-02-
+    Date:   2021-02-21
     Dev:    Me
-    Purpose: 
+    Purpose: Write FizzBuzz script
+    Loop through 1 - 100 inclusive and print
+    FizzBuzz if divisible by 5 and 3
+    Fizz if divisible by 3
+    Buzz if divisible by 5
+    prime if prime number
 
 """
-stopAt = 30
+stopAt = 100
 number = 1
 
 def checkPrime(num):
