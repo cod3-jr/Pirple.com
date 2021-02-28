@@ -6,7 +6,9 @@
         -----
          | |
     arguments: row int, columns int
-    return: if width and height <= maximum, return True
+    return value: 
+        if board width and height <= maximum terminal size, 
+            return True
         else return False
 """
 import math # only needed if printing row and / or column numbers
