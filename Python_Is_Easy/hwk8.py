@@ -1,3 +1,5 @@
+import os
+
 """
     2021-04-04
     Requirements:
@@ -18,3 +20,30 @@
             line to replace
             text that should replace the line
 """
+def writer(fileName):
+    file = open(fileName, "w")
+    line = ""
+    done = "!wq"
+    print("Write \'!wq\' to finish editing the file:")
+    while line != done:
+        line = input()
+        if line == done:
+            break
+        else:
+            file.writelines(line+"\n")
+    file.close()
+
+def noteTaker():
+    fileName = input("Input filename:\n")
+    if os.path.isfile(fileName):
+        # TODO: Handle File exists
+        # Maybe create "ask" method that returns value 
+        # that indicates what to do when file exists
+        # Or handle_file_exists to handle decision and writing
+        # Would be nice to reuse writer...
+        print(fileName,"exists")
+    else: 
+        writer(fileName)
+
+if __name__ == "__main__":
+    noteTaker()
