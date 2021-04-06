@@ -20,20 +20,45 @@ import os
             line to replace
             text that should replace the line
 """
-def writer(fileName):
-    file = open(fileName, "w")
-    line = ""
+def writer(fileName, opt='w'):
+    print("Write \'!wq\' on a new line to finish editing the file:")
+    file = open(fileName, opt)
     done = "!wq"
-    print("Write \'!wq\' to finish editing the file:")
+    line = ""
+    notes = []
+    # Capture input
     while line != done:
         line = input()
         if line == done:
             break
         else:
-            file.writelines(line+"\n")
+            notes.append(line)
+    # write output
+    # change to use writeLines
+    
+    if len(notes) > 0:
+        for line in notes[:-1]:
+            file.write('%s\n' %line)
+        file.write('%s' %notes[-1])
     file.close()
 
-def noteTaker():
+def handle_file_exists(fileName):
+    message = "Enter 'r' or 'read' to read file\n"
+    message += "Enter 'ow' or 'overwrite' to overwrite\n"
+    message += "Enter 'a' or 'append' to append to file\n"
+    message += "Enter 'e' or 'edit' to edit a line of the file\n"
+    option = input(message)
+
+    if option == 'r' or option == 'read':
+        file = open(fileName)
+        for line in file:
+            print('%s\n' %line)
+    elif option == 'ow' or option == 'overwrite':
+        writer(fileName)
+    elif option == 'a' or option == 'append':
+        print('append file')
+
+def note_taker():
     fileName = input("Input filename:\n")
     if os.path.isfile(fileName):
         # TODO: Handle File exists
@@ -41,9 +66,10 @@ def noteTaker():
         # that indicates what to do when file exists
         # Or handle_file_exists to handle decision and writing
         # Would be nice to reuse writer...
-        print(fileName,"exists")
-    else: 
+        # print(fileName,"exists")
+        handle_file_exists(fileName)
+    else: # i.e. New FileName passed
         writer(fileName)
 
 if __name__ == "__main__":
-    noteTaker()
+    note_taker()
