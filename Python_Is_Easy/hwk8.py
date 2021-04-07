@@ -58,11 +58,12 @@ def inserter(fileName):
     file.writelines(notes)
 
 def handle_file_exists(fileName):
-    message = "Enter 'r' or 'read' to read file\n"
-    message += "Enter 'ow' or 'overwrite' to overwrite\n"
+    message = "File %s already exists:\n\n"
+    message += "Enter 'r' or 'read' to read file\n"
+    message += "Enter 'o' or 'overwrite' to overwrite\n"
     message += "Enter 'a' or 'append' to append to file\n"
-    message += "Enter 'e' or 'edit' to edit a single line of the file\n"
-    option = input(message)
+    message += "Enter 'e' or 'edit' to edit a single line of the file:\n"
+    option = input(message %fileName)
 
     if option == 'r' or option == 'read':
         file = open(fileName)
