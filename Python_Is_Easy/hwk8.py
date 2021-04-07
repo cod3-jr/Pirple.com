@@ -33,42 +33,55 @@ def writer(fileName, opt='w'):
             break
         else:
             notes.append(line)
-    # write output
-    # change to use writeLines
     
+    if opt == 'a':
+        file.write('\n')
+    # write output
     if len(notes) > 0:
         for line in notes[:-1]:
             file.write('%s\n' %line)
         file.write('%s' %notes[-1])
     file.close()
 
+def inserter(fileName):
+    try:
+        line = int(input("Select line number to replace. First line of file is 1\n"))
+    except ValueError:
+        line = 1
+        print('Valid number not entered. Defaulting to 1\n')
+
+    text = input("Replace line %i with:" %line) + '\n'
+    file = open(fileName, 'r+')
+    notes = file.readlines()
+    notes[line-1] = text
+    file.seek(0,0)
+    file.writelines(notes)
+
 def handle_file_exists(fileName):
     message = "Enter 'r' or 'read' to read file\n"
     message += "Enter 'ow' or 'overwrite' to overwrite\n"
     message += "Enter 'a' or 'append' to append to file\n"
-    message += "Enter 'e' or 'edit' to edit a line of the file\n"
+    message += "Enter 'e' or 'edit' to edit a single line of the file\n"
     option = input(message)
 
     if option == 'r' or option == 'read':
         file = open(fileName)
-        for line in file:
-            print('%s\n' %line)
+        for line in file.readlines():
+            print('%s' %line,end="")
     elif option == 'ow' or option == 'overwrite':
         writer(fileName)
     elif option == 'a' or option == 'append':
-        print('append file')
+        writer(fileName, 'a')
+    elif option == 'e' or option == 'edit':
+        inserter(fileName)
 
 def note_taker():
     fileName = input("Input filename:\n")
-    if os.path.isfile(fileName):
-        # TODO: Handle File exists
-        # Maybe create "ask" method that returns value 
-        # that indicates what to do when file exists
-        # Or handle_file_exists to handle decision and writing
-        # Would be nice to reuse writer...
-        # print(fileName,"exists")
+    if os.path.isfile(fileName): 
+    # i.e. FileName exists
         handle_file_exists(fileName)
-    else: # i.e. New FileName passed
+    else: 
+    # i.e. New FileName passed
         writer(fileName)
 
 if __name__ == "__main__":
